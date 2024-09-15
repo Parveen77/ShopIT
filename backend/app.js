@@ -11,6 +11,7 @@ connectDatabase();
 
 //import all routes
 import productRoutes from "./routes/product.js";
+app.use(express.json())
 
 app.use("/api/v1", productRoutes);
 

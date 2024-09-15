@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "node backend/app.js",
-    "dev":"SETNODE_ENV= DEVELOPMENT& nodemon backend/app.js",
-    "prod":"SETNODE_ENV = PRODUCTION& nodemon backend/app.js"
+    "dev": "NODE_ENV=DEVELOPMENT nodemon backend/app.js",
+    "prod": "NODE_ENV=PRODUCTION nodemon backend/app.js",
+    "seeder": "node backend/seeder/seeder.js"
   },
   "author": "Parveen Bugalia",
   "license": "ISC",
