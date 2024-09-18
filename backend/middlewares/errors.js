@@ -11,7 +11,31 @@ export default (err, req, res, next) => {
     if(err.name ==="ValidationError"){
         const message = Object.values(err.errors).map((values) => values.message);
         error = new ErrorHandler(message, 400);
-    }
+    };
+
+    //handle invalid mongoose error
+    if(err.code ===11000) {
+        const message = `Duplicate ${Object.keys(err.keyValue)} entered`
+        error = new ErrorHandler(message, 400);
+    };
+
+    //Handle wrong JWT error
+    if(err.name === "JsonWebTokenError") {
+        const message = `Json Web Token is invalid. Try Again!!!`
+        error = new ErrorHandler(message, 400);
+    };
+
+    //Handle Expired JWT error
+    if(err.name === "TokenExpiredError") {
+        const message = `Json Web Token is Expired. Try Again!!!`
+        error = new ErrorHandler(message, 400);
+    };
+
+    //Handle invalid mongoose ID error
+    if(err.name === "CastError") {
+        const message  = `Resource not found. Invalid: ${err?.path}`;
+        error = new ErrorHandler(message, 404);
+    } 
 
     if(process.env.NODE_ENV === "DEVELOPMENT"){
         res.status(error.statusCode).json({
