@@ -130,4 +130,115 @@ export const resetPassword = catchAsyncErrors( async (req, res, next) => {
     await user.save();
 
     sendToken(user, 200, res);
-})
+});
+
+//Get current user profile
+export const getUserProfile = catchAsyncErrors(async (req, res, next) => {
+    //console.log(req?.user);
+    const user = req?.user
+
+
+    if(!user) {
+        return next(new ErrorHandler("Please login to access this resource", 401));
+    } 
+
+    res.status(200).json({
+        user,
+    });
+});
+
+//Reset password => /password/update
+export const updatePassword = catchAsyncErrors(async (req, res, next) => {
+    
+    const user = await User.findById(req?.user?._id).select("+password")
+    //console.log(user);
+
+    if(!user) {
+        return next(new ErrorHandler("Please login to access this resource", 401));
+    } 
+
+    const isPasswordCorrect = await user.comparePassword(req.body.oldPassword);
+
+    if(!isPasswordCorrect) {
+        return next(new ErrorHandler("Current password is incorrect. Try again!!!", 400 ));
+    }
+
+    user.password = req.body.password;
+    user.save();
+
+    res.status(200).json({
+        success: true,
+    });
+});
+
+//Update profile => /api/v1/me/update
+export const updateProfile = catchAsyncErrors( async (req, res, next) => {
+    const newUserDate = {
+        name: req.body.name,
+        email: req.body.email,
+    };
+
+    const user = await User.findByIdAndUpdate(req?.user?._id, newUserDate, { 
+        new: true 
+    });
+
+    res.status(200).json({
+        user,
+    });
+}); 
+
+//Get all users -admin => api/v1/admin/users
+export const getAllUsers = catchAsyncErrors( async (req, res, next) => {
+    const users = await User.find();
+
+    res.status(200).json({
+        users,
+    });
+});
+
+//Get user deatils -admin => api/v1/admin/user/:id
+export const getUserDetails = catchAsyncErrors( async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if(!user) {
+        return next(new ErrorHandler(`No user found with this ID: ${req.params.id}`, 404));
+    } 
+
+    res.status(200).json({
+        user,
+    });
+});
+
+//Update user - ADMIN => /api/v1/admin/user/:id
+export const updateUser = catchAsyncErrors( async (req, res, next) => {
+    const newUserDate = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role,
+    };
+
+    const user = await User.findByIdAndUpdate(req?.user?._id, newUserDate, { 
+        new: true 
+    });
+
+    res.status(200).json({
+        user,
+    });
+}); 
+
+//Delete user -ADMIN => /api/v1/admin/user/:id
+export const deleteUser = catchAsyncErrors( async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if(!user) {
+        return next(new ErrorHandler(`No user found with this ID: ${req.params.id}`, 404));
+    } 
+
+    //TODO remove user avatar from clodinary
+
+    await user.deleteOne();
+
+    res.status(200).json({
+        success: true,
+    });
+}); 
