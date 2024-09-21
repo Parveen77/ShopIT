@@ -6,7 +6,7 @@ import {
         getProductDetails,
         updateProduct,      
 } from '../controllers/productControllers.js';
-import { authorizeRoles, isAuthenticatedUser } from '../middlewares/auth.js';
+import { authorizeRoles, isAuthenticatedUser } from '../middlewares/auth.js'
 
 const router = express.Router();
 
@@ -16,5 +16,6 @@ router.route("/admin/products").post(isAuthenticatedUser,authorizeRoles("admin")
 router.route("/products/:id").get(getProductDetails);
 router.route("/products/:id").put(isAuthenticatedUser,authorizeRoles("admin"), updateProduct);
 router.route("/products/:id").delete(isAuthenticatedUser,authorizeRoles("admin"), deleteProduct);
+
 
 export default router; 
