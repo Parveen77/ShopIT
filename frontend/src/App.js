@@ -9,6 +9,10 @@ import Header from "./components/layout/Header.jsx";
 
 import { Toaster } from "react-hot-toast";
 import ProductDetails from "./components/product/productDetails.jsx";
+import Login from "./components/auth/Login.jsx";
+import Register from "./components/auth/Register.jsx";
+import Profile from "./components/user/Profile.jsx";
+//import Profile from "./components/auth/Register.jsx";
 
 function App() {
   return (
@@ -21,6 +25,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          
           </Routes>
         </div>
 
