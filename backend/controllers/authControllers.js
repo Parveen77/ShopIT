@@ -5,6 +5,7 @@ import sendToken from "../utils/sendToken.js";
 import {getResetPasswordTemplate} from "../utils/emailTemplates.js"
 import sendEmail from "../utils/sendEmails.js"
 import crypto from "crypto";
+import { upload_file, delete_file } from "../utils/cloudinary.js";
 
 
 //Register new user => /api/v1/register
@@ -64,6 +65,25 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
         })
 });
 
+//Upload user avatar => /api/v1/me/upload_avatar
+
+export const uploadAvatar = catchAsyncErrors(async (req, res, next) => {
+    const avatarResponse = await upload_file(req.body.avatar, "shopit/avatars");
+  
+    // Remove previous avatar
+    if (req?.user?.avatar?.url) {
+      await delete_file(req?.user?.avatar?.public_id);
+    }
+  
+    const user = await User.findByIdAndUpdate(req?.user?._id, {
+      avatar: avatarResponse,
+    });
+  
+    res.status(200).json({
+      user,
+    });
+  });
+  
 //Forget password => /api/v1/password/forgot
 export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
 

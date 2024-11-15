@@ -23,7 +23,7 @@ import productRoutes from "./routes/product.js";
 import authRoutes from "./routes/auth.js";
 import orderRoutes from "./routes/order.js";
 
-app.use(express.json())
+app.use(express.json({limit:"2mb"}));
 app.use(cookieParser());
 
 app.use("/api/v1", productRoutes);
