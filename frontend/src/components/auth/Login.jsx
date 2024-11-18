@@ -3,6 +3,7 @@ import { useLoginMutation } from '../../redux/api/authApi';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import MetaData from "../layout/MetaData";
   
   const Login = () =>  {
 
@@ -37,6 +38,8 @@ import { useSelector } from 'react-redux';
 	}
 
 	return (
+		<>
+     	 <MetaData title={"Login"} />
 		<div className="row wrapper">
 		<div className="col-10 col-lg-5">
 		  <form
@@ -80,7 +83,7 @@ import { useSelector } from 'react-redux';
 		  </form>
 		</div>
 	  </div>
-  
+	</>
 	);
   }
   

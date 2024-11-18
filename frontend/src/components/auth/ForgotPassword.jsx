@@ -3,6 +3,8 @@ import { useForgotPasswordMutation } from '../../redux/api/userApi';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import MetaData from "../layout/MetaData";
+
   
   const ForgotPassword = () =>  {
 
@@ -38,6 +40,8 @@ import toast from 'react-hot-toast';
 
 
 	return (
+		<>
+      <MetaData title={"Forgot Password"} />
 		<div className="row wrapper">
 		<div className="col-10 col-lg-5">
 		  <form
@@ -69,7 +73,7 @@ import toast from 'react-hot-toast';
 		  </form>
 		</div>
 	  </div>
-  
+  </>
 	);
   }
   
