@@ -21,7 +21,7 @@ class APIFilters {
     filters() {
         const queryCopy = { ...this.queryStr };
 
-        console.log(queryCopy);
+        //console.log(queryCopy);
 
         //Fields to remove
         const fieldsToRemove = ["keyword", "page"];

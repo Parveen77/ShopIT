@@ -115,7 +115,7 @@ import CheckoutSteps from './CheckoutSteps';
               required
             >
 				{countriesList?.map((country) => (
-				<option key={country?.name} value="Country1">{country?.name}</option>
+				<option key={country?.name} value={country?.name}>{country?.name}</option>
 				))};
             
             </select>
