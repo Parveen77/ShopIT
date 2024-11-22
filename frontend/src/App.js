@@ -22,6 +22,10 @@ import Cart from "./components/cart/Cart.jsx";
 import Shipping from "./components/cart/Shipping.jsx";
 import ConfirmOrder from "./components/cart/ConfirmOrder.jsx";
 import PaymentMethod from "./components/cart/PaymentMethod.jsx";
+import MyOrders from "./components/order/MyOrders.jsx";
+import OrderDetails from "./components/order/OrderDetails.jsx";
+import Invoice from "./components/invoice/Invoice.jsx";
+import NewReview from "./components/reviews/NewReview.jsx";
 
 function App() {
   return (
@@ -80,7 +84,25 @@ function App() {
               <ProtectedRoute>
                 <PaymentMethod />\
               </ProtectedRoute>
-              } />     
+              } />
+
+              <Route path="/me/orders" element={
+              <ProtectedRoute>
+                <MyOrders />\
+              </ProtectedRoute>
+              } />
+
+              <Route path="/me/order/:id" element={
+              <ProtectedRoute>
+                <OrderDetails />\
+              </ProtectedRoute>
+              } /> 
+              
+            <Route path="/invoice/order/:id" element={
+              <ProtectedRoute>
+                <Invoice />\
+              </ProtectedRoute>
+              } />    
 
           </Routes>
           

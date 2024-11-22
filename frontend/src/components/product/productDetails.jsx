@@ -4,9 +4,11 @@ import { useGetProductDetailsQuery } from "../../redux/api/productApi";
 import toast from "react-hot-toast";
 import Loader from "../layout/Loader";
 import StarRatings from "react-star-ratings";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCartItem } from "../../redux/features/cartSlice";
 import MetaData from "../layout/MetaData";
+import NewReview from "../reviews/NewReview.jsx";
+import ListReviews from "../reviews/ListReviews.jsx";
 
 const ProductDetails = () => {
     const params = useParams();
@@ -15,7 +17,9 @@ const ProductDetails = () => {
     const [quantity, setQuantity] = useState(1);
 
     const { data, isLoading, error, isError } = useGetProductDetailsQuery(params?.id);
-    const product = data?.product
+    const product = data?.product;
+
+    const { isAuthenticated } = useSelector((state) => state.auth)
 
     const [activeImg, setActiveImg] = useState("");
 
@@ -66,6 +70,9 @@ const ProductDetails = () => {
       };
   
       if(isLoading) return <Loader />
+
+      console.log(product?.ratings);
+      
       
     
     return (
@@ -156,12 +163,19 @@ const ProductDetails = () => {
         </p>
         <hr />
         <p id="product_seller mb-3">Sold by: <strong>{product?.seller}</strong></p>
-
-        <div className="alert alert-danger my-5" type="alert">
-          Login to post your review.
-        </div>
+        {isAuthenticated ? (
+            < NewReview productId={product?._id} />
+          ) : (
+            <div className="alert alert-danger my-5" type="alert">
+              Login to post your review.
+            </div>
+          )}
+        
       </div>
     </div>
+    {product?.reviews?.length > 0 && (
+      <ListReviews reviews={product?.reviews}/>
+    )}
     </>
     )
 };

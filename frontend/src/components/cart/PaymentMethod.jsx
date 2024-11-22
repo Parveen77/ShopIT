@@ -39,7 +39,7 @@ import { useNavigate } from 'react-router-dom';
 		}
 		if(isSuccess) {
 			toast.success("Order Placed Successfully");
-			navigate("/")
+			navigate("/me/orders?order_success=true")
 		}
 	}, [error, isSuccess])
 

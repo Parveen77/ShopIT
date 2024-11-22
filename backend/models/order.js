@@ -30,6 +30,11 @@ const orderSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    userName: {
+      type: String,
+      required: true,
+      ref: "UserName",
+    },
     orderItems: [
       {
         name: {

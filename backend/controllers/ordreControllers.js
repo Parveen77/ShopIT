@@ -25,9 +25,9 @@ export const newOrder = catchAsyncErrors(async (req, res, next) => {
         totalAmount,
         paymentMethod,
         paymentInfo,
-        user:req.user._id,
+        user:req?.user?._id,
+        userName:req?.user?.name,
     });
-
 
     res.status(200).json({
         order,
@@ -37,7 +37,7 @@ export const newOrder = catchAsyncErrors(async (req, res, next) => {
 
 //Get all orders by a user => /api/v1/me/orders
 export const myOrders = catchAsyncErrors(async (req, res, next) => {
-    const order = await Order.find({user: req.user._id}).populate("user", " name email");
+    const order = await Order.find({user: req.user._id}).populate("user","name email");
 
     if(!order) {
         return next( new ErrorHandler("No order found with this ID", 404));
