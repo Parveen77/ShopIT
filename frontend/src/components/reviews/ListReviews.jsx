@@ -2,7 +2,7 @@ import React from "react";
 import StarRatings from "react-star-ratings";
 
 const ListReviews = ({ reviews }) => {
-    console.log(reviews);
+    //console.log(reviews);
     
   return (
     <div>

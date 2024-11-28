@@ -18,6 +18,8 @@ export const upload_file = (file, folder) => {
           public_id: result.public_id,
           url: result.url,
         });
+        //console.log(result);
+        
       },
       {
         resource_type: "auto",
