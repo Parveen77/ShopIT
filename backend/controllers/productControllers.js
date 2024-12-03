@@ -131,6 +131,12 @@ export const deleteProduct = catchAsyncErrors(async (req, res) => {
     if (!product) {
         return next(new ErrorHandler("Product not found", 404))
     }
+
+     // Deleting image associated with product
+  for (let i = 0; i < product?.images?.length; i++) {
+    await delete_file(product?.images[i].public_id);
+  }
+
   
     await product.deleteOne();
   
@@ -185,7 +191,7 @@ export const createProductReview = catchAsyncErrors(async (req, res, next) => {
   
   // Get product reviews   =>  /api/v1/reviews
   export const getProductReviews = catchAsyncErrors(async (req, res, next) => {
-    const product = await Product.findById(req.query.id);
+    const product = await Product.findById(req.query.id).populate("reviews.user");
   
     if (!product) {
       return next(new ErrorHandler("Product not found", 404));
